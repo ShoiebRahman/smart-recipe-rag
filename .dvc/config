@@ -1,0 +1,7 @@
+[core]
+    remote = s3remote
+['remote "s3remote"']
+    url = s3://recipe-rag-dvc
+    endpointurl = ""
+    access_key_id = AWS_ACCESS_KEY_ID
+    secret_access_key = AWS_SECRET_ACCESS_KEY
