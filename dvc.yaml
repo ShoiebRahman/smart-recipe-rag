@@ -1,0 +1,16 @@
+stages:
+  ingest:
+    cmd: python -m src.ingest.loader
+    deps:
+      - src/ingest/loader.py
+      - params.yaml
+    outs:
+      - data/interim/recipes_interim.parquet
+  clean:
+    cmd: python -m src.ingest.clean
+    deps:
+      - src/ingest/clean.py
+      - data/interim/recipes_interim.parquet
+      - params.yaml
+    outs:
+      - data/processed/recipes_clean.parquet

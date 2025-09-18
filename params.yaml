@@ -1,0 +1,14 @@
+data:
+  raw_dir: data/raw
+  interim_dir: data/interim
+  processed_dir: data/processed
+
+clean:
+  dedupe_by: ["Name", "RecipeIngredientParts"]
+  min_ingredients: 3          # count of RecipeIngredientParts
+  max_minutes: 240            # check TotalTime column
+
+nutrition:
+  enabled: true               # since your dataset already has nutrition info
+  source: "dataset"           # not external USDA
+

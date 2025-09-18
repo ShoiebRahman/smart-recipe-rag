@@ -4,6 +4,7 @@ __pycache__/
 .mypy_cache/
 .pytest_cache/
 mlruns/
-data/        # local previews only (DVC will manage large data)
+data/    # local previews only (DVC will manage large data)
 .env
 .cache/
+.env:Zone.Identifier
