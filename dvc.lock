@@ -1,0 +1,38 @@
+schema: '2.0'
+stages:
+  ingest:
+    cmd: python -m src.ingest.loader
+    deps:
+    - path: params.yaml
+      hash: md5
+      md5: ec685596dba4664584e6cc679d720a2d
+      size: 400
+    - path: src/ingest/loader.py
+      hash: md5
+      md5: 66e93dc6cbd5b47fd60bdf2a4aa6d31b
+      size: 947
+    outs:
+    - path: data/interim/recipes_interim.parquet
+      hash: md5
+      md5: 70f4431990b9097239f961c83781fffb
+      size: 300791923
+  clean:
+    cmd: python -m src.ingest.clean
+    deps:
+    - path: data/interim/recipes_interim.parquet
+      hash: md5
+      md5: 70f4431990b9097239f961c83781fffb
+      size: 300791923
+    - path: params.yaml
+      hash: md5
+      md5: ec685596dba4664584e6cc679d720a2d
+      size: 400
+    - path: src/ingest/clean.py
+      hash: md5
+      md5: 618993231664fa89534e6d1b52d3774f
+      size: 2140
+    outs:
+    - path: data/processed/recipes_clean.parquet
+      hash: md5
+      md5: ae4b900df3587c818afb945af0555f33
+      size: 279158293

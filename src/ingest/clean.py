@@ -4,11 +4,28 @@ from pathlib import Path
 
 import pandas as pd
 import yaml
+import re
 
 
 def read_params() -> dict:
     with open("params.yaml") as f:
         return yaml.safe_load(f)
+
+
+def parse_time_to_minutes(value: str) -> int:
+    if pd.isna(value):
+        return None
+    if isinstance(value, (int, float)):
+        return int(value)
+
+    # Example formats: 'PT30M', 'PT1H20M', 'PT2H'
+    match = re.match(r"PT(?:(\d+)H)?(?:(\d+)M)?", str(value))
+    if match:
+        hours = int(match.group(1)) if match.group(1) else 0
+        minutes = int(match.group(2)) if match.group(2) else 0
+        return hours * 60 + minutes
+    return None
+
 
 
 def basic_clean(df: pd.DataFrame, params: dict) -> pd.DataFrame:
@@ -27,7 +44,12 @@ def basic_clean(df: pd.DataFrame, params: dict) -> pd.DataFrame:
 
     # Filter by total cooking time if available
     if "TotalTime" in df.columns:
-        df = df[(df["TotalTime"] > 0) & (df["TotalTime"] <= params["clean"]["max_minutes"])]
+        df["TotalTime"] = df["TotalTime"].apply(parse_time_to_minutes)
+        df = df.dropna(subset=["TotalTime"])
+        df = df[
+            (df["TotalTime"] > 0)
+            & (df["TotalTime"] <= params["clean"]["max_minutes"])
+        ]
 
     # Normalize whitespace in recipe names
     if "Name" in df.columns:
