@@ -8,7 +8,7 @@ df = pd.read_csv(file_path, nrows=5)
 
 # Print 2 sample rows
 print("=== Sample Rows ===")
-print(df.head(2)['TotalTime'])
+print(df.head(2)["TotalTime"])
 
 # Print column datatypes
 print("\n=== Column Data Types ===")

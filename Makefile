@@ -1,25 +1,24 @@
 .PHONY: fmt lint type test ingest clean mlflow
 
 fmt:
-\truff check --fix .
-\tblack .
+	ruff check --fix .
+	black .
 
 lint:
-\truff check .
-\tblack --check .
+	ruff check .
+	black --check .
 
 type:
-\tmypy src
+	mypy src
 
 test:
-\tpytest -q
+	pytest -q
 
 mlflow:
-\tmlflow ui --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./mlruns
+	mlflow ui --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:////mlflow/mlflow.db --default-artifact-root /mlruns
 
-# DVC pipeline steps
 ingest:
-\tdvc repro ingest
+	dvc repro ingest
 
 clean:
-\trm -rf data/processed data/interim
+	rm -rf data/processed data/interim

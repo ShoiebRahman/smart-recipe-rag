@@ -1,10 +1,10 @@
 from __future__ import annotations
 
+import re
 from pathlib import Path
 
 import pandas as pd
 import yaml
-import re
 
 
 def read_params() -> dict:
@@ -27,7 +27,6 @@ def parse_time_to_minutes(value: str) -> int:
     return None
 
 
-
 def basic_clean(df: pd.DataFrame, params: dict) -> pd.DataFrame:
     df = df.copy()
 
@@ -46,10 +45,7 @@ def basic_clean(df: pd.DataFrame, params: dict) -> pd.DataFrame:
     if "TotalTime" in df.columns:
         df["TotalTime"] = df["TotalTime"].apply(parse_time_to_minutes)
         df = df.dropna(subset=["TotalTime"])
-        df = df[
-            (df["TotalTime"] > 0)
-            & (df["TotalTime"] <= params["clean"]["max_minutes"])
-        ]
+        df = df[(df["TotalTime"] > 0) & (df["TotalTime"] <= params["clean"]["max_minutes"])]
 
     # Normalize whitespace in recipe names
     if "Name" in df.columns:
