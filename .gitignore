@@ -9,3 +9,4 @@ data/    # local previews only (DVC will manage large data)
 .cache/
 .env:Zone.Identifier
 infra/compose/docker-compose.yml:Zone.Identifier
+qdrant_data/
