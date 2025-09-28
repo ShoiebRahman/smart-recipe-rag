@@ -29,10 +29,30 @@ stages:
       size: 400
     - path: src/ingest/clean.py
       hash: md5
-      md5: 618993231664fa89534e6d1b52d3774f
-      size: 2140
+      md5: d327837149f9303b2c88ed62b14ddacb
+      size: 2105
     outs:
     - path: data/processed/recipes_clean.parquet
       hash: md5
-      md5: ae4b900df3587c818afb945af0555f33
-      size: 279158293
+      md5: d958cf9caf6376ea3e1204df6a99fdef
+      size: 279161806
+  chunk:
+    cmd: python -m src.index.chunk
+    deps:
+    - path: data/processed/recipes_clean.parquet
+      hash: md5
+      md5: d958cf9caf6376ea3e1204df6a99fdef
+      size: 279161806
+    - path: params.yaml
+      hash: md5
+      md5: ec685596dba4664584e6cc679d720a2d
+      size: 400
+    - path: src/index/chunk.py
+      hash: md5
+      md5: e24e8f167441c2e24ff9a174982960ac
+      size: 3926
+    outs:
+    - path: data/processed/chunks.parquet
+      hash: md5
+      md5: 8d732fa1f0c13730b0dc6c55abe2d30f
+      size: 348586297
