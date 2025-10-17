@@ -22,3 +22,10 @@ stages:
     - params.yaml
     outs:
     - data/processed/chunks.parquet
+  embed:
+    cmd: python -m src.index.embed_upsert
+    deps:
+    - src/index/embed_upsert.py
+    - data/processed/chunks.parquet
+    outs:
+    - data/processed/chunk_vectors.parquet
