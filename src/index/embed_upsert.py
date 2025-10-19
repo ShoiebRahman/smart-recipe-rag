@@ -2,10 +2,6 @@
 """
 Embed and upsert recipe chunks into Qdrant Cloud with sharding, checkpointing, and MLflow logging.
 
-Usage examples (from Lightning terminal):
-
-python -m src.index.embed_upsert --start 0 --limit 200000 --batch-size 256 --checkpoint ckpt_0_200k.json
-python -m src.index.embed_upsert --start 200000 --limit 200000 --batch-size 256 --checkpoint ckpt_200k_400k.json
 """
 
 import os
@@ -25,7 +21,7 @@ from qdrant_client.models import VectorParams, Distance, PointStruct
 import mlflow
 
 # --------------------------------------------------------
-# ✅ Utility functions
+#  Utility functions
 # --------------------------------------------------------
 
 def parse_args():
@@ -66,7 +62,7 @@ def make_qdrant_client() -> QdrantClient:
     return QdrantClient(url=url, api_key=api_key, prefer_grpc=False)
 
 # --------------------------------------------------------
-# ✅ Main embedding + upsert logic
+#  Main embedding + upsert logic
 # --------------------------------------------------------
 
 def main() -> None:
@@ -108,7 +104,7 @@ def main() -> None:
         )
 
     # ----------------------------------------------------
-    # ✅ Embedding loop
+    #  Embedding loop
     # ----------------------------------------------------
     with mlflow.start_run(run_name=f"embed_{start}_{end}") as run:
         mlflow.log_param("model", model_name)
