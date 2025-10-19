@@ -14,6 +14,7 @@ import json
 import time
 from pathlib import Path
 from typing import Optional
+import torch
 
 import pandas as pd
 import numpy as np
@@ -89,8 +90,9 @@ def main() -> None:
     print(f"Processing rows {start} → {end} (total: {total_rows})")
 
     # Prepare model & client
-    device = "cuda" if os.environ.get("USE_CUDA", "0") == "1" else "cpu"
-    print(f"Loading embedding model: {model_name} on {device}")
+    use_cuda = os.environ.get("USE_CUDA", "0") == "1"
+    device = "cuda" if (use_cuda and torch.cuda.is_available()) else "cpu"
+    print(f"[embed] USE_CUDA={use_cuda} torch.cuda.is_available()={torch.cuda.is_available()} -> device={device}")
     model = SentenceTransformer(model_name, device=device)
     client = make_qdrant_client()
 
